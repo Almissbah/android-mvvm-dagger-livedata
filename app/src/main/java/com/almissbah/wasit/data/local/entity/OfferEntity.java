@@ -13,7 +13,7 @@ import com.almissbah.wasit.data.remote.model.OfferOwner;
 public class OfferEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private int LID;
 
     private int id;
 
@@ -60,8 +60,60 @@ public class OfferEntity {
         this.offerCategory = offerCategory;
     }
 
-    public void set_id(int local_id) {
-        this._id = local_id;
+    public void setLID(int LID) {
+        this.LID = LID;
+    }
+
+    public int getLID() {
+        return LID;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setLikedDate(Long likedDate) {
+        this.likedDate = likedDate;
+    }
+
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setOfferOwner(OfferOwner offerOwner) {
+        this.offerOwner = offerOwner;
+    }
+
+    public void setOfferCategory(OfferCategory offerCategory) {
+        this.offerCategory = offerCategory;
     }
 
     public int getId() {
