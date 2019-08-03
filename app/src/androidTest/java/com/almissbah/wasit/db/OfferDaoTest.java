@@ -5,7 +5,7 @@ import com.almissbah.wasit.utils.MockTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OffersDaoTest extends DbTest {
+public class OfferDaoTest extends DbTest {
 
     @Test
     public void insertAndReadMovieTest() {

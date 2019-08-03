@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity(tableName = "category_table")
 public class CategoryEntity {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private int LID;
 
     private int id;
 
@@ -30,8 +30,12 @@ public class CategoryEntity {
         this.updateAt = updateAt;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public int getLID() {
+        return LID;
+    }
+
+    public void setLID(int LID) {
+        this.LID = LID;
     }
 
     public int getId() {
@@ -48,5 +52,21 @@ public class CategoryEntity {
 
     public Date getUpdateAt() {
         return updateAt;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 }
