@@ -4,16 +4,20 @@ import android.arch.lifecycle.LiveData;
 import com.almissbah.wasit.data.remote.model.OfferApiResponce;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface OffersApiService {
 
-    @GET("offers")
-    OfferApiResponce fetchAllOffers(@Path("type") String type);
+    @GET("/offers")
+    OfferApiResponce fetchAllOffers(String type);
 
-    @GET("offers/{id}")
+    @GET("/categories/{category}")
+    OfferApiResponce fetchOffersByCategory(@Path("category") String category);
+
+    @GET("/categories/offers/{id}")
     OfferApiResponce fetchOfferById(@Path("id") int id);
 
-    @POST("offers/{id}/like")
+    @PUT("/offers/{id}/like")
     OfferApiResponce likeOffer(@Path("id") int id);
 }
