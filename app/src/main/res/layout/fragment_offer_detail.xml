@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                                             tools:context=".ui.detail.fragment.OfferDetailFragment">
+
+    <ImageView
+            android:layout_width="299dp"
+            android:layout_height="153dp" tools:srcCompat="@tools:sample/avatars"
+            android:id="@+id/iv_offer_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_owner"
+            app:layout_constraintHorizontal_bias="0.506"/>
+    <TextView
+            android:text="Offer Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_title" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.069" android:textSize="24sp"
+            android:textColor="@android:color/black"/>
+    <TextView
+            android:text="Offer  info text and details"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/tv_info" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp" app:layout_constraintTop_toBottomOf="@+id/iv_offer_image"
+            android:textSize="14sp" app:layout_constraintHorizontal_bias="0.15"/>
+
+    <Button
+            android:text="Like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btn_like" android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_info" android:layout_marginStart="68dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/iv_offer_image"
+            app:layout_constraintVertical_bias="0.0"/>
+    <TextView
+            android:text="Offer Owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_owner"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.063"/>
+
+    <us.feras.mdv.MarkdownView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/markdownView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp" app:layout_constraintTop_toBottomOf="@+id/tv_info"/>
+</android.support.constraint.ConstraintLayout>

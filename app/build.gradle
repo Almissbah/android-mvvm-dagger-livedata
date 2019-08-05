@@ -89,4 +89,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //testImplementation 'org.junit.jupiter:junit-jupiter-api'
+
+// markdown
+    implementation 'us.feras.mdv:markdownview:1.1.0'
 }
