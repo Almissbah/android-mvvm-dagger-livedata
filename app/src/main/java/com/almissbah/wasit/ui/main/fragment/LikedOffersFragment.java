@@ -15,12 +15,12 @@ import com.almissbah.wasit.ui.main.viewmodel.LikedOffersViewModel;
 
 import java.util.List;
 
-public class likedOffersFragment extends Fragment {
+public class LikedOffersFragment extends Fragment {
 
     private LikedOffersViewModel mViewModel;
 
-    public static likedOffersFragment newInstance() {
-        return new likedOffersFragment();
+    public static LikedOffersFragment newInstance() {
+        return new LikedOffersFragment();
     }
 
     @Override

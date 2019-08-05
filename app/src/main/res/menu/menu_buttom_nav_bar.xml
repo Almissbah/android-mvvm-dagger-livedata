@@ -3,5 +3,5 @@
 
     <item android:title="Home" android:id="@+id/home" android:icon="@android:drawable/ic_menu_today"/>
     <item android:title="Liked" android:id="@+id/liked" android:icon="@android:drawable/btn_star_big_off"/>
-    <item android:title="About" android:id="@+id/about" android:icon="@android:drawable/ic_menu_info_details"/>
+    <item android:title="Profile" android:id="@+id/profile" android:icon="@android:drawable/ic_menu_edit"/>
 </menu>
