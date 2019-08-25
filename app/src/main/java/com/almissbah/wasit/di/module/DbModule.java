@@ -23,14 +23,14 @@ public class DbModule {
 
     @Provides
     @Singleton
-    CategoryDao provideMovieDao( AppDatabase appDatabase) {
+    CategoryDao provideCategoryDao(AppDatabase appDatabase) {
         return appDatabase.CategoryDao();
     }
 
 
     @Provides
     @Singleton
-    OfferDao provideTvDao( AppDatabase appDatabase) {
+    OfferDao provideOfferDao(AppDatabase appDatabase) {
         return appDatabase.offerDao();
     }
 }

@@ -30,6 +30,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions 'mode'
+    productFlavors {
+        demo {
+            dimension = 'mode'
+            versionCode = 1
+            versionName = '1'
+        }
+        full {
+            dimension = 'mode'
+            versionCode = 1
+            versionName = '1'
+        }
+    }
 }
 
 dependencies {

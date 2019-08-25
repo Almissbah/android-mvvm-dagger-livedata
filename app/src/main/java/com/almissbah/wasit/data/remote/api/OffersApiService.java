@@ -9,15 +9,15 @@ import retrofit2.http.Path;
 
 public interface OffersApiService {
 
-    @GET("/offers")
+    @GET("/categories/all/offers")
     OfferApiResponce fetchAllOffers(String type);
 
-    @GET("/categories/{category}")
+    @GET("/categories/{category}/offers")
     OfferApiResponce fetchOffersByCategory(@Path("category") String category);
 
-    @GET("/categories/offers/{id}")
+    @GET("/categories/all/offers/{id}")
     OfferApiResponce fetchOfferById(@Path("id") int id);
 
-    @PUT("/offers/{id}/like")
+    @PUT("/categories/all/offers/{id}/like")
     OfferApiResponce likeOffer(@Path("id") int id);
 }
