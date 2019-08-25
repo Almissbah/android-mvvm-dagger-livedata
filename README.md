@@ -19,9 +19,9 @@ Based on mvvm architecture and repository pattern.
 
 ### App Packages:
 * **data** - contains :
- * api - contains the api classes to make api calls to MovieDB server, using Retrofit.
- * local - contains the db classes to cache network data.
- * repository - contains the repository classes, responsible for triggering api requests and saving the response in the database.
+  * api - contains the api classes to make api calls to MovieDB server, using Retrofit.
+  * local - contains the db classes to cache network data.
+  * repository - contains the repository classes, responsible for triggering api requests and saving the response in the database.
 * **di** - contains dependency injection classes, using Dagger2.
 * **ui** - contains classes needed to display Activity and Fragment.
 * **util** - contains classes needed for activity/fragment redirection, ui/ux animations.
