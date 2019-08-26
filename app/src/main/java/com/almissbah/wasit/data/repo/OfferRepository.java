@@ -23,7 +23,10 @@ public class OfferRepository {
         allOffers= offerDao.getAllOffers();
         allCategories=categoryDao.getAllCategories();
     }
-    
+
+    public LiveData<OfferEntity> getOfferById(int id) {
+        return offerDao.getOfferById(id);
+    }
     public void insertOffer(OfferEntity offerEntity){}
     public void updateOffer(OfferEntity offerEntity){}
 

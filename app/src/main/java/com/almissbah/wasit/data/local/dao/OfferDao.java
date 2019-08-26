@@ -26,7 +26,7 @@ public interface OfferDao {
     void deleteAllOffers();
 
     @Query("SELECT * FROM `offers_table` where id = :id")
-    OfferEntity getOfferById(int id);
+    LiveData<OfferEntity> getOfferById(int id);
 
 
     @Query("SELECT * FROM offers_table ORDER BY createdAt DESC")

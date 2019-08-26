@@ -1,6 +1,7 @@
 package com.almissbah.wasit.ui.main.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,11 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
+import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.databinding.ProfileFragmentBinding;
 import com.almissbah.wasit.ui.main.viewmodel.ProfileViewModel;
+import dagger.android.support.DaggerFragment;
 
-public class ProfileFragment extends Fragment {
+import javax.inject.Inject;
 
+public class ProfileFragment extends DaggerFragment {
+    private ProfileFragmentBinding mBinding;
     private ProfileViewModel mViewModel;
+    @Inject
+    public String offerEntity;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -22,7 +30,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_fragment, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
+        mBinding.tvName.setText(offerEntity);
+        return mBinding.getRoot();
     }
 
     @Override

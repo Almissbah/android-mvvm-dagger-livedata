@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.entity.OfferEntity;
 import com.almissbah.wasit.ui.main.viewmodel.LikedOffersViewModel;
+import dagger.android.support.DaggerFragment;
 
 import java.util.List;
 
-public class LikedOffersFragment extends Fragment {
+public class LikedOffersFragment extends DaggerFragment {
 
     private LikedOffersViewModel mViewModel;
 

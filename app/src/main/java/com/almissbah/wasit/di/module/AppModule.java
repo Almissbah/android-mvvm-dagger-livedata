@@ -3,6 +3,8 @@ package com.almissbah.wasit.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.remote.api.AuthenticationApiService;
 import com.almissbah.wasit.data.remote.api.OffersApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +27,6 @@ public class AppModule {
     @Singleton
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-//        gsonBuilder.registerTypeAdapter(MOVIE_ARRAY_LIST_CLASS_TYPE, new MoviesJsonDeserializer());
         return gsonBuilder.create();
     }
 
@@ -49,8 +50,19 @@ public class AppModule {
 
     @Provides
     @Singleton
-    OffersApiService provideMovieApiService(Retrofit retrofit) {
+    OffersApiService provideOffersApiService(Retrofit retrofit) {
         return retrofit.create(OffersApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    AuthenticationApiService provideAuthenticationApiService(Retrofit retrofit) {
+        return retrofit.create(AuthenticationApiService.class);
+    }
+
+    @Provides
+    String provideOfferEntity() {
+        return "Mohammed almissbah 2";
     }
 
 }

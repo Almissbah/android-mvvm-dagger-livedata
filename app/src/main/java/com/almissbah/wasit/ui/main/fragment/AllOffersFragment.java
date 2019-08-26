@@ -12,14 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.BuildConfig;
 import com.almissbah.wasit.R;
+import com.almissbah.wasit.data.local.entity.OfferEntity;
 import com.almissbah.wasit.databinding.AllOffersFragmentBinding;
 import com.almissbah.wasit.ui.main.adapter.AllOffersAdapter;
 import com.almissbah.wasit.ui.main.viewmodel.AllOffersViewModel;
+import dagger.android.support.DaggerFragment;
 
-public class AllOffersFragment extends Fragment {
-    AllOffersFragmentBinding mBinding;
+public class AllOffersFragment extends DaggerFragment {
+    private AllOffersFragmentBinding mBinding;
     private AllOffersViewModel mViewModel;
-
+    private AllOfferFragmentListener listener;
     public static AllOffersFragment newInstance() {
         return new AllOffersFragment();
     }
@@ -33,6 +35,11 @@ public class AllOffersFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    public void setListener(AllOfferFragmentListener listener
+    ) {
+        this.listener = listener;
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -42,7 +49,14 @@ public class AllOffersFragment extends Fragment {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         mViewModel.getAllOffers().observe(this, offerEntities -> {
-            AllOffersAdapter allOffersAdapter = new AllOffersAdapter(offerEntities);
+            AllOffersAdapter allOffersAdapter = new AllOffersAdapter(offerEntities, new AllOffersAdapter.AllOffersAdapterListener() {
+                @Override
+                public void onOfferClicked(View view, OfferEntity offerEntity) {
+                    if (listener != null) {
+                        listener.onOfferClick(offerEntity);
+                    }
+                }
+            });
             mBinding.recyclerView.setAdapter(allOffersAdapter);
 
         });
@@ -56,4 +70,7 @@ public class AllOffersFragment extends Fragment {
         }
     }
 
+    public interface AllOfferFragmentListener {
+        void onOfferClick(OfferEntity offerEntity);
+    }
 }

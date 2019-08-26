@@ -12,8 +12,10 @@ import com.almissbah.wasit.R;
 import com.almissbah.wasit.databinding.ActivityDetailsBinding;
 import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment;
 
+import static com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment.OFFER_ID;
+
 public class DetailsActivity extends AppCompatActivity {
-    OfferDetailFragment offerDetailFragment = new OfferDetailFragment();
+
     ActivityDetailsBinding mBinding;
 
     @Override
@@ -21,19 +23,14 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = mBinding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setSupportActionBar(mBinding.toolbar);
 
 
+        Bundle bundle = new Bundle();
+        bundle.putInt(OFFER_ID, 1);
+
+        OfferDetailFragment offerDetailFragment = new OfferDetailFragment();
+        offerDetailFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, offerDetailFragment);
         transaction.commit();

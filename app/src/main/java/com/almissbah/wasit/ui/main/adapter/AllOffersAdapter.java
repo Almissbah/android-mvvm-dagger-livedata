@@ -1,6 +1,7 @@
 package com.almissbah.wasit.ui.main.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,38 +11,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.databinding.OfferItemBinding;
 
 import java.util.List;
 
-public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.ViewHolder> {
+public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.MyViewHolder> {
     List<OfferEntity> offerEntities;
+    AllOffersAdapterListener listener;
 
-    public AllOffersAdapter(List<OfferEntity> offerEntities) {
+    public AllOffersAdapter(List<OfferEntity> offerEntities, AllOffersAdapterListener listener) {
         this.offerEntities = offerEntities;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         Context context = viewGroup.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.offer_item, viewGroup, false);
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+        OfferItemBinding binding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.offer_item, viewGroup, false);
+        return new MyViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int position) {
 
         // Get the data model based on position
         OfferEntity offerEntity = offerEntities.get(position);
-        // Set item views based on your views and data model
-        viewHolder.offerTitle.setText(offerEntity.getTitle());
-        viewHolder.offerInfo.setText(offerEntity.getContent());
-        viewHolder.offerOwner.setText(offerEntity.getOfferOwner().toString());
+        viewHolder.binding.setOffer(offerEntity);
+        viewHolder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null)
+                    listener.onOfferClicked(view, offerEntity);
+            }
+        });
     }
 
     @Override
@@ -49,21 +56,17 @@ public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.View
         return offerEntities.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView offerTitle;
-        public TextView offerInfo;
-        public TextView offerOwner;
-        public ImageView offerImage;
+        private final OfferItemBinding binding;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            offerTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            offerInfo = (TextView) itemView.findViewById(R.id.tv_info);
-            offerOwner = (TextView) itemView.findViewById(R.id.tv_owner);
-
-            offerImage = (ImageView) itemView.findViewById(R.id.iv_offer_image);
+        public MyViewHolder(final OfferItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.binding = itemBinding;
         }
+    }
+
+    public interface AllOffersAdapterListener {
+        void onOfferClicked(View view, OfferEntity offerEntity);
     }
 }

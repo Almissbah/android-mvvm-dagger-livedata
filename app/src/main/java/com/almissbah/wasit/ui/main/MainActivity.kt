@@ -1,5 +1,6 @@
 package com.almissbah.wasit.ui.main
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -9,21 +10,25 @@ import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentTransaction
+import android.support.v4.util.TimeUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.almissbah.wasit.R
-import com.almissbah.wasit.databinding.ActivityMainBinding
 import com.almissbah.wasit.ui.main.fragment.AllOffersFragment
 import com.almissbah.wasit.ui.main.fragment.LikedOffersFragment
 import com.almissbah.wasit.ui.main.fragment.ProfileFragment
+import dagger.android.support.DaggerAppCompatActivity
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var mainBinding: ActivityMainBinding
+class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var mainBinding: com.almissbah.wasit.databinding.ActivityMainBinding
     val likedOffersFragment: LikedOffersFragment =
         LikedOffersFragment()
     val allOffersFrgment: AllOffersFragment = AllOffersFragment()
     val profileFragment: ProfileFragment = ProfileFragment()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -43,10 +48,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+        allOffersFrgment.setListener { offerEntity ->
+            {
+                val intent: Intent = Intent()
 
-
-
-
+            }
+        }
 
 
         bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
@@ -108,12 +115,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_slideshow -> {
 
             }
+
             R.id.nav_tools -> {
 
             }
+
             R.id.nav_share -> {
 
             }
+
             R.id.nav_send -> {
 
             }
