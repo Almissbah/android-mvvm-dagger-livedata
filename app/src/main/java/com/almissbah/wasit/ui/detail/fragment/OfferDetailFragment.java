@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.FragmentOfferDetailBinding;
 import com.almissbah.wasit.ui.detail.viewmodel.OfferDetailViewModel;
 import dagger.android.support.DaggerFragment;
+
+import javax.inject.Inject;
 
 
 public class OfferDetailFragment extends DaggerFragment {
@@ -23,7 +26,8 @@ public class OfferDetailFragment extends DaggerFragment {
     public static String OFFER_ID = "offer_id";
     private FragmentOfferDetailBinding mBinding;
     private OfferDetailViewModel offerDetailViewModel;
-
+    @Inject
+    DemoRepo repository;
     public OfferDetailFragment() {
 
     }
@@ -40,13 +44,13 @@ public class OfferDetailFragment extends DaggerFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
         offerDetailViewModel = ViewModelProviders.of(this).get(OfferDetailViewModel.class);
         offer_id = getArguments().getInt(OFFER_ID);
+        offerDetailViewModel.setRepository(repository);
         offerDetailViewModel.getOfferById(offer_id).observe(this, new Observer<OfferEntity>() {
             @Override
             public void onChanged(@Nullable OfferEntity offerEntity) {
                 mBinding.setOffer(offerEntity);
             }
         });
-        //    mBinding.setOffer(offerEntity);
         return mBinding.getRoot();
     }
 

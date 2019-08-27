@@ -44,7 +44,10 @@ public class DemoRepo implements AppRepository {
 
     @Override
     public LiveData<OfferEntity> getOfferById(int id) {
-        return null;
+
+        MutableLiveData<OfferEntity> data = new MutableLiveData<>();
+        data.setValue(MockTestUtils.mockOffers().get(1));
+        return data;
     }
 
     @Override
