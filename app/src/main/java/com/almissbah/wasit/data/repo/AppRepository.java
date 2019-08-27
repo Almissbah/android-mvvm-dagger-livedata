@@ -1,6 +1,7 @@
 package com.almissbah.wasit.data.repo;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.local.pref.User;
@@ -17,7 +18,7 @@ public interface AppRepository {
 
     public LiveData<List<OfferEntity>> getLikedOffers();
 
-    public LiveData<List<OfferEntity>> getAllOffers();
+    public MutableLiveData<List<OfferEntity>> getAllOffers();
 
     public LiveData<List<CategoryEntity>> getAllCategories();
 
@@ -26,4 +27,6 @@ public interface AppRepository {
     void likeOffer(OfferEntity offerEntity);
 
     LiveData<User> getAppUser();
+
+    LiveData<List<OfferEntity>> getOffersByCategory(CategoryEntity categoryEntity);
 }

@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.BuildConfig;
 import com.almissbah.wasit.R;
+import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.AllOffersFragmentBinding;
+import com.almissbah.wasit.ui.main.MainActivity;
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
 import com.almissbah.wasit.ui.main.viewmodel.OffersViewModel;
 import dagger.android.support.DaggerFragment;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
@@ -36,6 +40,13 @@ public class OffersFragment extends DaggerFragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(
                 inflater, R.layout.all_offers_fragment, container, false);
+        ((MainActivity) getActivity()).setCategoryChangeListener(new MainActivity.CategoryChangeListener() {
+
+            @Override
+            public void onCategoryChange(@NotNull CategoryEntity category) {
+                mViewModel.getOffersByCategory(category);
+            }
+        });
 
         return mBinding.getRoot();
     }
@@ -58,6 +69,9 @@ public class OffersFragment extends DaggerFragment {
             offersAdapter.setClickListener(clickedOfferListener);
             offersAdapter.setLikedListener(likedOfferListener);
             mBinding.recyclerView.setAdapter(offersAdapter);
+            offersAdapter.notifyDataSetChanged();
+
+            Log.d(OffersAdapter.class.getSimpleName(), "Data has changed ");
         });
 
 

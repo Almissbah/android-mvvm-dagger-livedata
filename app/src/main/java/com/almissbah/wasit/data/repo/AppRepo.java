@@ -1,6 +1,7 @@
 package com.almissbah.wasit.data.repo;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import com.almissbah.wasit.data.local.db.dao.CategoryDao;
 import com.almissbah.wasit.data.local.db.dao.OfferDao;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
@@ -18,13 +19,13 @@ public class AppRepo implements AppRepository {
     @Inject
     public CategoryDao categoryDao;
 
-    private LiveData<List<OfferEntity>> allOffers;
-    private LiveData<List<CategoryEntity>> allCategories;
+    private MutableLiveData<List<OfferEntity>> allOffers;
+    private MutableLiveData<List<CategoryEntity>> allCategories;
 
     public AppRepo() {
 
-        allOffers= offerDao.getAllOffers();
-        allCategories=categoryDao.getAllCategories();
+        allOffers = (MutableLiveData<List<OfferEntity>>) offerDao.getAllOffers();
+        allCategories = (MutableLiveData<List<CategoryEntity>>) categoryDao.getAllCategories();
     }
 
     public LiveData<OfferEntity> getOfferById(int id) {
@@ -39,7 +40,7 @@ public class AppRepo implements AppRepository {
         return allOffers;
     }
 
-    public LiveData<List<OfferEntity>> getAllOffers(){
+    public MutableLiveData<List<OfferEntity>> getAllOffers() {
         return allOffers;
     }
 
@@ -57,6 +58,11 @@ public class AppRepo implements AppRepository {
 
     @Override
     public LiveData<User> getAppUser() {
+        return null;
+    }
+
+    @Override
+    public MutableLiveData<List<OfferEntity>> getOffersByCategory(CategoryEntity categoryEntity) {
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.almissbah.wasit.data.local.db.dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.*;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 
@@ -23,7 +24,7 @@ public interface CategoryDao {
 
 
     @Query("SELECT * FROM category_table where id= :id")
-    CategoryEntity getCategoryById(int id);
+    LiveData<CategoryEntity> getCategoryById(int id);
 
     @Query("SELECT * FROM category_table ")
     LiveData<List<CategoryEntity>> getAllCategories();
