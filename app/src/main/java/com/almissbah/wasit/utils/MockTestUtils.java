@@ -10,7 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 public class MockTestUtils {
-
+    static String mkd = "#Offer Title \n" +
+            "##Secound Title \n" +
+            "*Test **title** again* \n" +
+            "\n * hhh " +
+            "\n * h232 \n" +
+            "";
     public static List<OfferEntity> mockOffers() {
         OfferOwner offerOwner = new OfferOwner();
         offerOwner.setTitle("Mohammed Corp");
@@ -19,19 +24,19 @@ public class MockTestUtils {
                 "", false
                 , "", (long) 1232423, (long) 234234, (long) 234234, offerOwner, new OfferCategory());
         offerEntities.add(offerEntity1);
-        OfferEntity offerEntity2 = new OfferEntity(2, 5, "Ticket 2", "Have Offer in tickets 2", "", false
+        OfferEntity offerEntity2 = new OfferEntity(2, 5, "Ticket 2", "Have Offer in tickets 2", mkd, false
                 , "", (long) 1232423, (long) 234234, (long) 234234, offerOwner, new OfferCategory());
         offerEntities.add(offerEntity2);
 
-        OfferEntity offerEntity3 = new OfferEntity(2, 5, "Ticket 3", "Have Offer in tickets 3", "", false
+        OfferEntity offerEntity3 = new OfferEntity(2, 5, "Ticket 3", "Have Offer in tickets 3", mkd, false
                 , "", (long) 1232423, (long) 234234, (long) 234234, offerOwner, new OfferCategory());
         offerEntities.add(offerEntity2);
 
-        OfferEntity offerEntity4 = new OfferEntity(2, 5, "Ticket 4", "Have Offer in tickets 4", "", false
+        OfferEntity offerEntity4 = new OfferEntity(2, 5, "Ticket 4", "Have Offer in tickets 4", mkd, false
                 , "", (long) 1232423, (long) 234234, (long) 234234, offerOwner, new OfferCategory());
         offerEntities.add(offerEntity2);
 
-        OfferEntity offerEntity5 = new OfferEntity(2, 5, "Ticket 5", "Have Offer in tickets 5", "", false
+        OfferEntity offerEntity5 = new OfferEntity(2, 5, "Ticket 5", "Have Offer in tickets 5", mkd, false
                 , "", (long) 1232423, (long) 234234, (long) 234234, offerOwner, new OfferCategory());
         offerEntities.add(offerEntity2);
         return offerEntities;

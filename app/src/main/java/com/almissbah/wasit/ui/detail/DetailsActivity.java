@@ -23,7 +23,6 @@ public class DetailsActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
-
         setSupportActionBar(mBinding.toolbar);
 
 

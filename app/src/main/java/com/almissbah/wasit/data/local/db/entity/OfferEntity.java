@@ -45,7 +45,7 @@ public class OfferEntity {
     private OfferCategory offerCategory;
 
 
-    public OfferEntity(int id, int likes, String title, String content, String description, boolean liked, String imageUrl, Long likedDate, Long createdAt, Long updatedAt, OfferOwner offerOwner, OfferCategory offerCategory) {
+    public OfferEntity(int id, int likes, String title, String description, String content, boolean liked, String imageUrl, Long likedDate, Long createdAt, Long updatedAt, OfferOwner offerOwner, OfferCategory offerCategory) {
         this.id = id;
         this.likes = likes;
         this.title = title;

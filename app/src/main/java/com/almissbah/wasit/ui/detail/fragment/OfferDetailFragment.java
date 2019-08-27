@@ -16,6 +16,7 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.FragmentOfferDetailBinding;
 import com.almissbah.wasit.ui.detail.viewmodel.OfferDetailViewModel;
+import com.squareup.picasso.Picasso;
 import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
@@ -49,6 +50,8 @@ public class OfferDetailFragment extends DaggerFragment {
             @Override
             public void onChanged(@Nullable OfferEntity offerEntity) {
                 mBinding.setOffer(offerEntity);
+                Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
+                mBinding.markdownView.loadMarkdown(offerEntity.getContent());
             }
         });
         return mBinding.getRoot();
