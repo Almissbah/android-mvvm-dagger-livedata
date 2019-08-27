@@ -4,24 +4,34 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.almissbah.wasit.R;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.databinding.OfferItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.MyViewHolder> {
+public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHolder> {
     List<OfferEntity> offerEntities;
-    AllOffersAdapterListener listener;
+    OffersAdapterListener clickListener;
+    OffersAdapterListener likedListener;
 
-    public AllOffersAdapter(List<OfferEntity> offerEntities, AllOffersAdapterListener listener) {
+    public OffersAdapter(List<OfferEntity> offerEntities) {
         this.offerEntities = offerEntities;
-        this.listener = listener;
+        this.clickListener = clickListener;
+        this.likedListener = likedListener;
+    }
+
+    public void setClickListener(OffersAdapterListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void setLikedListener(OffersAdapterListener likedListener) {
+        this.likedListener = likedListener;
     }
 
     @NonNull
@@ -38,15 +48,22 @@ public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int position) {
-
-        // Get the data model based on position
         OfferEntity offerEntity = offerEntities.get(position);
         viewHolder.binding.setOffer(offerEntity);
+        Picasso.get().load(R.drawable.offer_image_3).into(viewHolder.binding.ivOfferImage);
+        viewHolder.binding.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (likedListener != null)
+                    likedListener.onClicked(view, offerEntity);
+            }
+        });
         viewHolder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null)
-                    listener.onOfferClicked(view, offerEntity);
+                Log.d(OffersAdapter.class.getSimpleName(), "Offer with title " + offerEntity.getTitle() + " Clicked ");
+                if (clickListener != null)
+                    clickListener.onClicked(view, offerEntity);
             }
         });
     }
@@ -66,7 +83,7 @@ public class AllOffersAdapter extends RecyclerView.Adapter<AllOffersAdapter.MyVi
         }
     }
 
-    public interface AllOffersAdapterListener {
-        void onOfferClicked(View view, OfferEntity offerEntity);
+    public interface OffersAdapterListener {
+        void onClicked(View view, OfferEntity offerEntity);
     }
 }

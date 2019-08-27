@@ -1,4 +1,4 @@
-package com.almissbah.wasit.data.local.converter;
+package com.almissbah.wasit.data.local.db.converter;
 
 import android.arch.persistence.room.TypeConverter;
 

@@ -1,6 +1,6 @@
 package com.almissbah.wasit.db;
 
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.utils.MockTestUtils;
 import org.junit.Assert;
 import org.junit.Test;

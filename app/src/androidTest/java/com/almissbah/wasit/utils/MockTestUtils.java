@@ -1,7 +1,7 @@
 package com.almissbah.wasit.utils;
 
-import com.almissbah.wasit.data.local.entity.CategoryEntity;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.remote.model.OfferCategory;
 import com.almissbah.wasit.data.remote.model.OfferOwner;
 

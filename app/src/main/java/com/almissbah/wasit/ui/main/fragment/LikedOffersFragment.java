@@ -2,24 +2,30 @@ package com.almissbah.wasit.ui.main.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.repo.DemoRepo;
+import com.almissbah.wasit.databinding.LikedOffersFragmentBinding;
+import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
 import com.almissbah.wasit.ui.main.viewmodel.LikedOffersViewModel;
 import dagger.android.support.DaggerFragment;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class LikedOffersFragment extends DaggerFragment {
-
+    private LikedOffersFragmentBinding mBinding;
     private LikedOffersViewModel mViewModel;
-
+    @Inject
+    DemoRepo repository;
     public static LikedOffersFragment newInstance() {
         return new LikedOffersFragment();
     }
@@ -27,7 +33,10 @@ public class LikedOffersFragment extends DaggerFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.liked_offers_fragment, container, false);
+        mBinding = DataBindingUtil.inflate(
+                inflater, R.layout.liked_offers_fragment, container, false);
+
+        return mBinding.getRoot();
     }
 
     @Override
@@ -35,21 +44,18 @@ public class LikedOffersFragment extends DaggerFragment {
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = ViewModelProviders.of(this).get(LikedOffersViewModel.class);
+        mViewModel.setRepository(repository);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         mViewModel.getLikedOffers().observe(this, new Observer<List<OfferEntity>>() {
             @Override
             public void onChanged(@Nullable List<OfferEntity> offerEntities) {
 
-
-                updateRecyclerView(offerEntities);
+                OffersAdapter offersAdapter = new OffersAdapter(offerEntities);
+                mBinding.recyclerView.setAdapter(offersAdapter);
             }
         });
-
-
     }
 
-    private void updateRecyclerView(List<OfferEntity> offerEntities) {
-        // TODO: Complete updateRecyclerView function
-    }
 
 }

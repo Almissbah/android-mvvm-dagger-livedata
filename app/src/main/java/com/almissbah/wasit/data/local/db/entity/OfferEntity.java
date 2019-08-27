@@ -1,11 +1,11 @@
-package com.almissbah.wasit.data.local.entity;
+package com.almissbah.wasit.data.local.db.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-import com.almissbah.wasit.data.local.converter.OfferCategoryConverter;
-import com.almissbah.wasit.data.local.converter.OfferOwnerConverter;
-import com.almissbah.wasit.data.local.converter.TimestampConverter;
+import com.almissbah.wasit.data.local.db.converter.OfferCategoryConverter;
+import com.almissbah.wasit.data.local.db.converter.OfferOwnerConverter;
+import com.almissbah.wasit.data.local.db.converter.TimestampConverter;
 import com.almissbah.wasit.data.remote.model.OfferCategory;
 import com.almissbah.wasit.data.remote.model.OfferOwner;
 

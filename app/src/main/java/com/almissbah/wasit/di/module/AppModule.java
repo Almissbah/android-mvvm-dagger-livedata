@@ -3,9 +3,10 @@ package com.almissbah.wasit.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
 import com.almissbah.wasit.data.remote.api.AuthenticationApiService;
 import com.almissbah.wasit.data.remote.api.OffersApiService;
+import com.almissbah.wasit.data.repo.AppRepo;
+import com.almissbah.wasit.data.repo.DemoRepo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;
@@ -52,6 +53,19 @@ public class AppModule {
     @Singleton
     OffersApiService provideOffersApiService(Retrofit retrofit) {
         return retrofit.create(OffersApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    AppRepo provideOfferRepository() {
+        return new AppRepo();
+    }
+
+
+    @Provides
+    @Singleton
+    DemoRepo provideDemoRepo() {
+        return new DemoRepo();
     }
 
     @Provides

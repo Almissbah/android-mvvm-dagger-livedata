@@ -1,8 +1,8 @@
-package com.almissbah.wasit.data.local.dao;
+package com.almissbah.wasit.data.local.db.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.*;
-import com.almissbah.wasit.data.local.entity.CategoryEntity;
+import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 
 import java.util.List;
 

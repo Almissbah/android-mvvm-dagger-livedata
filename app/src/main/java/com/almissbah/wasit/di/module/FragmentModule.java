@@ -1,7 +1,7 @@
 package com.almissbah.wasit.di.module;
 
 import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment;
-import com.almissbah.wasit.ui.main.fragment.AllOffersFragment;
+import com.almissbah.wasit.ui.main.fragment.OffersFragment;
 import com.almissbah.wasit.ui.main.fragment.LikedOffersFragment;
 import com.almissbah.wasit.ui.main.fragment.ProfileFragment;
 import dagger.Module;
@@ -12,7 +12,7 @@ public abstract class FragmentModule {
     abstract LikedOffersFragment contributeLikedOffersFragment();
 
     @ContributesAndroidInjector
-    abstract AllOffersFragment contributeAllOffersFragment();
+    abstract OffersFragment contributeAllOffersFragment();
 
     @ContributesAndroidInjector
     abstract ProfileFragment contributeProfileFragment();

@@ -2,9 +2,9 @@ package com.almissbah.wasit.di.module;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
-import com.almissbah.wasit.data.local.AppDatabase;
-import com.almissbah.wasit.data.local.dao.CategoryDao;
-import com.almissbah.wasit.data.local.dao.OfferDao;
+import com.almissbah.wasit.data.local.db.AppDatabase;
+import com.almissbah.wasit.data.local.db.dao.CategoryDao;
+import com.almissbah.wasit.data.local.db.dao.OfferDao;
 import dagger.Module;
 import dagger.Provides;
 

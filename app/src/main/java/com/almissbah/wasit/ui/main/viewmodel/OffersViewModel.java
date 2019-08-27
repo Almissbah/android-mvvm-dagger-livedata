@@ -9,22 +9,23 @@ import com.almissbah.wasit.data.repo.AppRepository;
 
 import java.util.List;
 
-public class LikedOffersViewModel extends AndroidViewModel {
+public class OffersViewModel extends AndroidViewModel {
+    AppRepository repository;
 
-    private AppRepository repository;
-    private LiveData<List<OfferEntity>> likedOffers;
-    public LikedOffersViewModel(@NonNull Application application) {
+    public OffersViewModel(@NonNull Application application) {
         super(application);
     }
 
     public void setRepository(AppRepository repository) {
         this.repository = repository;
-        likedOffers= repository.getLikedOffers();
     }
 
-    public LiveData<List<OfferEntity>> getLikedOffers() {
-        return likedOffers;
+    public LiveData<List<OfferEntity>> getAllOffers() {
+        LiveData<List<OfferEntity>> allOffers = repository.getAllOffers();
+        return allOffers;
     }
 
-    // TODO: Implement the ViewModel
+    public void likeOffer(OfferEntity offerEntity) {
+        repository.likeOffer(offerEntity);
+    }
 }

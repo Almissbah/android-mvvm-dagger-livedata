@@ -1,25 +1,28 @@
 package com.almissbah.wasit.data.repo;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import com.almissbah.wasit.data.local.AppDatabase;
-import com.almissbah.wasit.data.local.dao.CategoryDao;
-import com.almissbah.wasit.data.local.dao.OfferDao;
-import com.almissbah.wasit.data.local.entity.CategoryEntity;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.dao.CategoryDao;
+import com.almissbah.wasit.data.local.db.dao.OfferDao;
+import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.local.pref.User;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
-public class OfferRepository {
-    private OfferDao offerDao;
-    private CategoryDao categoryDao;
+@Singleton
+public class AppRepo implements AppRepository {
+    @Inject
+    public OfferDao offerDao;
+    @Inject
+    public CategoryDao categoryDao;
+
     private LiveData<List<OfferEntity>> allOffers;
     private LiveData<List<CategoryEntity>> allCategories;
 
-    public OfferRepository(Application application) {
-        AppDatabase appDatabase= AppDatabase.getInstance(application);
-        offerDao = appDatabase.offerDao();
-        categoryDao= appDatabase.CategoryDao();
+    public AppRepo() {
+
         allOffers= offerDao.getAllOffers();
         allCategories=categoryDao.getAllCategories();
     }
@@ -27,7 +30,9 @@ public class OfferRepository {
     public LiveData<OfferEntity> getOfferById(int id) {
         return offerDao.getOfferById(id);
     }
+
     public void insertOffer(OfferEntity offerEntity){}
+
     public void updateOffer(OfferEntity offerEntity){}
 
     public LiveData<List<OfferEntity>> getLikedOffers(){
@@ -42,5 +47,16 @@ public class OfferRepository {
         return allCategories;
     }
 
-    void fetchFromServer(){}
+    public void fetchFromServer() {
+    }
+
+    @Override
+    public void likeOffer(OfferEntity offerEntity) {
+        offerDao.update(offerEntity);
+    }
+
+    @Override
+    public LiveData<User> getAppUser() {
+        return null;
+    }
 }

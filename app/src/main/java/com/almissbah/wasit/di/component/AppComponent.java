@@ -8,13 +8,15 @@ import com.almissbah.wasit.di.module.DbModule;
 import com.almissbah.wasit.di.module.FragmentModule;
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {AppModule.class, DbModule.class, AndroidSupportInjectionModule.class, ActivityBuilderModule.class, FragmentModule.class})
-public interface AppComponent {
+public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
     @Component.Builder
     interface Builder {

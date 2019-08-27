@@ -1,6 +1,6 @@
 package com.almissbah.wasit.data.remote.model;
 
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 
 import java.util.List;
 

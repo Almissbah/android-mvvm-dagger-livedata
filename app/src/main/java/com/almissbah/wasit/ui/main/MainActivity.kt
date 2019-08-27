@@ -10,12 +10,12 @@ import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentTransaction
-import android.support.v4.util.TimeUtils
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.almissbah.wasit.R
-import com.almissbah.wasit.ui.main.fragment.AllOffersFragment
+import com.almissbah.wasit.ui.detail.DetailsActivity
+import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment.OFFER_ID
+import com.almissbah.wasit.ui.main.fragment.OffersFragment
 import com.almissbah.wasit.ui.main.fragment.LikedOffersFragment
 import com.almissbah.wasit.ui.main.fragment.ProfileFragment
 import dagger.android.support.DaggerAppCompatActivity
@@ -25,7 +25,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     lateinit var mainBinding: com.almissbah.wasit.databinding.ActivityMainBinding
     val likedOffersFragment: LikedOffersFragment =
         LikedOffersFragment()
-    val allOffersFrgment: AllOffersFragment = AllOffersFragment()
+    val offersFrgment: OffersFragment =
+        OffersFragment()
     val profileFragment: ProfileFragment = ProfileFragment()
 
 
@@ -48,19 +49,22 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
-        allOffersFrgment.setListener { offerEntity ->
-            {
-                val intent: Intent = Intent()
+        offersFrgment.setListener { offerEntity ->
 
-            }
+            var intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(OFFER_ID, offerEntity.id)
+            startActivity(intent)
         }
 
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_layout, offersFrgment)
+        transaction.commit()
 
         bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
                     val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frame_layout, allOffersFrgment)
+                    transaction.replace(R.id.frame_layout, offersFrgment)
                     transaction.commit()
                 }
                 R.id.liked -> {
@@ -120,13 +124,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
             }
 
-            R.id.nav_share -> {
-
-            }
-
-            R.id.nav_send -> {
-
-            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

@@ -1,11 +1,8 @@
-package com.almissbah.wasit.data.local.converter;
+package com.almissbah.wasit.data.local.db.converter;
 
 import android.arch.persistence.room.TypeConverter;
 import com.almissbah.wasit.data.remote.model.OfferCategory;
-import com.almissbah.wasit.data.remote.model.OfferOwner;
 import com.google.gson.Gson;
-
-import java.util.Date;
 
 public class OfferCategoryConverter {
     @TypeConverter

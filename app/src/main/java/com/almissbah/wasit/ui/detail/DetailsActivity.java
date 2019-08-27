@@ -11,10 +11,11 @@ import android.view.View;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.databinding.ActivityDetailsBinding;
 import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment;
+import dagger.android.support.DaggerAppCompatActivity;
 
 import static com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment.OFFER_ID;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends DaggerAppCompatActivity {
 
     ActivityDetailsBinding mBinding;
 

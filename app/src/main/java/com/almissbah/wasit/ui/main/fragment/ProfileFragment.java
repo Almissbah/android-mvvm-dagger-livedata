@@ -1,16 +1,17 @@
 package com.almissbah.wasit.ui.main.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
-import com.almissbah.wasit.data.local.entity.OfferEntity;
+import com.almissbah.wasit.data.local.pref.User;
+import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.ProfileFragmentBinding;
 import com.almissbah.wasit.ui.main.viewmodel.ProfileViewModel;
 import dagger.android.support.DaggerFragment;
@@ -21,7 +22,7 @@ public class ProfileFragment extends DaggerFragment {
     private ProfileFragmentBinding mBinding;
     private ProfileViewModel mViewModel;
     @Inject
-    public String offerEntity;
+    DemoRepo repository;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -31,7 +32,7 @@ public class ProfileFragment extends DaggerFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
-        mBinding.tvName.setText(offerEntity);
+
         return mBinding.getRoot();
     }
 
@@ -39,6 +40,13 @@ public class ProfileFragment extends DaggerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        mViewModel.setRepository(repository);
+        mViewModel.getAppUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                mBinding.tvName.setText(user.getName());
+            }
+        });
         // TODO: Use the ViewModel
     }
 
