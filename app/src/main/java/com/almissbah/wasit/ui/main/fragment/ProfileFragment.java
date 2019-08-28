@@ -14,6 +14,7 @@ import com.almissbah.wasit.data.local.pref.User;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.ProfileFragmentBinding;
 import com.almissbah.wasit.ui.main.viewmodel.ProfileViewModel;
+import com.squareup.picasso.Picasso;
 import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ public class ProfileFragment extends DaggerFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
-
+        Picasso.get().load(R.drawable.offer_image_3).into(mBinding.userImage);
         return mBinding.getRoot();
     }
 

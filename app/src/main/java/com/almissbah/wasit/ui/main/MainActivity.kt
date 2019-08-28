@@ -1,7 +1,6 @@
 package com.almissbah.wasit.ui.main
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -22,8 +21,6 @@ import android.view.View
 import com.almissbah.wasit.R
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity
 import com.almissbah.wasit.data.repo.AppRepo
-import com.almissbah.wasit.data.repo.AppRepository
-import com.almissbah.wasit.data.repo.DemoRepo
 import com.almissbah.wasit.ui.detail.DetailsActivity
 import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment.OFFER_ID
 import com.almissbah.wasit.ui.main.adapter.CategoryAdapter
@@ -32,9 +29,7 @@ import com.almissbah.wasit.ui.main.fragment.OffersFragment
 import com.almissbah.wasit.ui.main.fragment.LikedOffersFragment
 import com.almissbah.wasit.ui.main.fragment.ProfileFragment
 import com.almissbah.wasit.ui.main.viewmodel.CategoryViewModel
-import com.almissbah.wasit.ui.main.viewmodel.OffersViewModel
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -152,14 +147,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_home -> {
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
+            R.id.nav_about_us -> {
 
             }
 
-            R.id.nav_tools -> {
+            R.id.nav_settings -> {
 
             }
 

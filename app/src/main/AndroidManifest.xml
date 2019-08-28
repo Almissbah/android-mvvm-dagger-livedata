@@ -7,7 +7,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:name="com.almissbah.wasit.MyApplication"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/offer_image_3"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
