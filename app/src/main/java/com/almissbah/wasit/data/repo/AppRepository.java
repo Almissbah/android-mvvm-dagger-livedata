@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface AppRepository {
 
-    public LiveData<OfferEntity> getOfferById(int id);
+    LiveData<OfferEntity> getOfferById(int id);
 
-    public void insertOffer(OfferEntity offerEntity);
+    void insertOffer(OfferEntity offerEntity);
 
-    public void updateOffer(OfferEntity offerEntity);
+    void updateOffer(OfferEntity offerEntity);
 
-    public LiveData<List<OfferEntity>> getLikedOffers();
+    LiveData<List<OfferEntity>> getLikedOffers();
 
-    public MutableLiveData<List<OfferEntity>> getAllOffers();
+    LiveData<List<OfferEntity>> getAllOffers();
 
-    public LiveData<List<CategoryEntity>> getAllCategories();
+    LiveData<List<CategoryEntity>> getAllCategories();
 
     void fetchFromServer();
 
@@ -28,5 +28,5 @@ public interface AppRepository {
 
     LiveData<User> getAppUser();
 
-    LiveData<List<OfferEntity>> getOffersByCategory(CategoryEntity categoryEntity);
+    LiveData<List<OfferEntity>> getOffersByCategory(String category);
 }

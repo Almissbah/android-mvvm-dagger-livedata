@@ -1,7 +1,7 @@
 package com.almissbah.wasit.data.repo;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 import com.almissbah.wasit.data.local.db.dao.CategoryDao;
 import com.almissbah.wasit.data.local.db.dao.OfferDao;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
@@ -14,18 +14,19 @@ import java.util.List;
 
 @Singleton
 public class AppRepo implements AppRepository {
-    @Inject
+
     public OfferDao offerDao;
-    @Inject
+
     public CategoryDao categoryDao;
 
-    private MutableLiveData<List<OfferEntity>> allOffers;
-    private MutableLiveData<List<CategoryEntity>> allCategories;
 
-    public AppRepo() {
+    private LiveData<List<OfferEntity>> allOffers;
+    private LiveData<List<CategoryEntity>> allCategories;
 
-        allOffers = (MutableLiveData<List<OfferEntity>>) offerDao.getAllOffers();
-        allCategories = (MutableLiveData<List<CategoryEntity>>) categoryDao.getAllCategories();
+    @Inject
+    public AppRepo(OfferDao offerDao, CategoryDao categoryDao) {
+        this.offerDao = offerDao;
+        this.categoryDao = categoryDao;
     }
 
     public LiveData<OfferEntity> getOfferById(int id) {
@@ -37,14 +38,20 @@ public class AppRepo implements AppRepository {
     public void updateOffer(OfferEntity offerEntity){}
 
     public LiveData<List<OfferEntity>> getLikedOffers(){
+        allOffers = offerDao.getLikedOffers();
+        //   Log.d(AppRepo.class.getSimpleName(),"getLikedOffers size"+ allOffers.getValue().size());
         return allOffers;
     }
 
-    public MutableLiveData<List<OfferEntity>> getAllOffers() {
+    public LiveData<List<OfferEntity>> getAllOffers() {
+        allOffers = offerDao.getAllOffers();
+        //Log.d(AppRepo.class.getSimpleName(),"getAllOffers size"+ allOffers.getValue().size());
         return allOffers;
     }
 
     public LiveData<List<CategoryEntity>> getAllCategories() {
+        allCategories = categoryDao.getAllCategories();
+
         return allCategories;
     }
 
@@ -62,7 +69,7 @@ public class AppRepo implements AppRepository {
     }
 
     @Override
-    public MutableLiveData<List<OfferEntity>> getOffersByCategory(CategoryEntity categoryEntity) {
-        return null;
+    public LiveData<List<OfferEntity>> getOffersByCategory(String category) {
+        return offerDao.getOffersByCategories("%" + category + "%");
     }
 }

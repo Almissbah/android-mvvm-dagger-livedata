@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.repo.AppRepo;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.LikedOffersFragmentBinding;
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
@@ -25,7 +26,7 @@ public class LikedOffersFragment extends DaggerFragment {
     private LikedOffersFragmentBinding mBinding;
     private LikedOffersViewModel mViewModel;
     @Inject
-    DemoRepo repository;
+    AppRepo repository;
     public static LikedOffersFragment newInstance() {
         return new LikedOffersFragment();
     }
@@ -46,13 +47,14 @@ public class LikedOffersFragment extends DaggerFragment {
         mViewModel = ViewModelProviders.of(this).get(LikedOffersViewModel.class);
         mViewModel.setRepository(repository);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
+        OffersAdapter offersAdapter = new OffersAdapter();
+        mBinding.recyclerView.setAdapter(offersAdapter);
         mViewModel.getLikedOffers().observe(this, new Observer<List<OfferEntity>>() {
             @Override
             public void onChanged(@Nullable List<OfferEntity> offerEntities) {
 
-                OffersAdapter offersAdapter = new OffersAdapter(offerEntities);
-                mBinding.recyclerView.setAdapter(offersAdapter);
+                offersAdapter.setOfferEntities(offerEntities);
+                offersAdapter.notifyDataSetChanged();
             }
         });
     }

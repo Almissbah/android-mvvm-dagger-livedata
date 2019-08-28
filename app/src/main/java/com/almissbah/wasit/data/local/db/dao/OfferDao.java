@@ -8,8 +8,6 @@ import java.util.List;
 
 @Dao
 public interface OfferDao {
-
-
     @Insert
     void insert(OfferEntity OfferEntity);
 
@@ -28,6 +26,8 @@ public interface OfferDao {
     @Query("SELECT * FROM `offers_table` where id = :id")
     LiveData<OfferEntity> getOfferById(int id);
 
+    @Query("SELECT * FROM offers_table WHERE offerCategory LIKE :category ORDER BY createdAt DESC")
+    LiveData<List<OfferEntity>> getOffersByCategories(String category);
 
     @Query("SELECT * FROM offers_table ORDER BY createdAt DESC")
     LiveData<List<OfferEntity>> getAllOffers();

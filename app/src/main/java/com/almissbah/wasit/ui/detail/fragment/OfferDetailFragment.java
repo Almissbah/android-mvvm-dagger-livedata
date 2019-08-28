@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.repo.AppRepo;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.FragmentOfferDetailBinding;
 import com.almissbah.wasit.ui.detail.viewmodel.OfferDetailViewModel;
@@ -28,7 +29,7 @@ public class OfferDetailFragment extends DaggerFragment {
     private FragmentOfferDetailBinding mBinding;
     private OfferDetailViewModel offerDetailViewModel;
     @Inject
-    DemoRepo repository;
+    AppRepo repository;
     public OfferDetailFragment() {
 
     }
@@ -46,12 +47,20 @@ public class OfferDetailFragment extends DaggerFragment {
         offerDetailViewModel = ViewModelProviders.of(this).get(OfferDetailViewModel.class);
         offer_id = getArguments().getInt(OFFER_ID);
         offerDetailViewModel.setRepository(repository);
+
         offerDetailViewModel.getOfferById(offer_id).observe(this, new Observer<OfferEntity>() {
             @Override
             public void onChanged(@Nullable OfferEntity offerEntity) {
                 mBinding.setOffer(offerEntity);
                 Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
+                if (offerEntity.isLiked()) mBinding.btnLike.setVisibility(View.INVISIBLE);
                 mBinding.markdownView.loadMarkdown(offerEntity.getContent());
+                mBinding.btnLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        offerDetailViewModel.likeOffer(offerEntity);
+                    }
+                });
             }
         });
         return mBinding.getRoot();

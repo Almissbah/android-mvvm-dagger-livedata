@@ -13,17 +13,20 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.databinding.OfferItemBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHolder> {
-    List<OfferEntity> offerEntities;
+    List<OfferEntity> offerEntities = new ArrayList<>();
     OffersAdapterListener clickListener;
     OffersAdapterListener likedListener;
 
-    public OffersAdapter(List<OfferEntity> offerEntities) {
+    public OffersAdapter() {
+
+    }
+
+    public void setOfferEntities(List<OfferEntity> offerEntities) {
         this.offerEntities = offerEntities;
-        this.clickListener = clickListener;
-        this.likedListener = likedListener;
     }
 
     public void setClickListener(OffersAdapterListener clickListener) {
@@ -51,6 +54,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         OfferEntity offerEntity = offerEntities.get(position);
         viewHolder.binding.setOffer(offerEntity);
         Picasso.get().load(R.drawable.offer_image_3).into(viewHolder.binding.ivOfferImage);
+        if (offerEntity.isLiked()) viewHolder.binding.btnLike.setVisibility(View.INVISIBLE);
         viewHolder.binding.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +74,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
+
         return offerEntities.size();
     }
 

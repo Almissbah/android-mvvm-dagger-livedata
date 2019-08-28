@@ -3,10 +3,12 @@ package com.almissbah.wasit.data.repo;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.local.pref.User;
+import com.almissbah.wasit.data.remote.model.Offer;
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
 import com.almissbah.wasit.utils.MockTestUtils;
 
@@ -50,25 +52,27 @@ public class DemoRepo implements AppRepository {
     }
 
     @Override
-    public MutableLiveData<List<OfferEntity>> getOffersByCategory(CategoryEntity categoryEntity) {
+    public LiveData<List<OfferEntity>> getOffersByCategory(String category) {
         MutableLiveData<List<OfferEntity>> data = new MutableLiveData<>();
-        List<OfferEntity> list = new ArrayList<>();
-        list.add(MockTestUtils.mockOffers().get(1));
-        list.add(MockTestUtils.mockOffers().get(2));
-        data.setValue(list);
+
         Log.d(OffersAdapter.class.getSimpleName(), "Filtering data ");
 
-       /* data.postValue();
-            data.setValue(MockTestUtils.mockOffers().stream().filter(a-> a.getOfferCategory().getTitle().contains(categoryEntity.getTitle())).collect(Collectors.toList()));
-        */
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            data.setValue(MockTestUtils.mockOffers().stream().filter(a -> a.getOfferCategory().getTitle().contains(category)).collect(Collectors.toList()));
+        }
         return data;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public LiveData<OfferEntity> getOfferById(int id) {
 
         MutableLiveData<OfferEntity> data = new MutableLiveData<>();
-        data.setValue(MockTestUtils.mockOffers().get(1));
+        List<OfferEntity> list = MockTestUtils.mockOffers().stream().filter(a -> a.getId() == id).collect(Collectors.toList());
+        data.setValue(list.get(0));
+
+
         return data;
     }
 
@@ -85,7 +89,9 @@ public class DemoRepo implements AppRepository {
     @Override
     public LiveData<List<OfferEntity>> getLikedOffers() {
         MutableLiveData<List<OfferEntity>> data = new MutableLiveData<>();
-        data.setValue(MockTestUtils.mockOffers());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            data.setValue(MockTestUtils.mockOffers().stream().filter(a -> a.isLiked()).collect(Collectors.toList()));
+        }
         return data;
     }
 }

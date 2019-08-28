@@ -13,6 +13,9 @@ public interface CategoryDao {
     @Insert
     void insert(CategoryEntity categoryEntity);
 
+    @Insert
+    void insert(List<CategoryEntity> categoryEntities);
+
     @Update
     void update(CategoryEntity categoryEntity);
 
@@ -26,7 +29,7 @@ public interface CategoryDao {
     @Query("SELECT * FROM category_table where id= :id")
     LiveData<CategoryEntity> getCategoryById(int id);
 
-    @Query("SELECT * FROM category_table ")
+    @Query("SELECT * FROM category_table")
     LiveData<List<CategoryEntity>> getAllCategories();
 
 

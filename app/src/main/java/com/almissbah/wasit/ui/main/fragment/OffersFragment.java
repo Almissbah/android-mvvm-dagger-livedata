@@ -14,6 +14,7 @@ import com.almissbah.wasit.BuildConfig;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
+import com.almissbah.wasit.data.repo.AppRepo;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.AllOffersFragmentBinding;
 import com.almissbah.wasit.ui.main.MainActivity;
@@ -29,7 +30,7 @@ public class OffersFragment extends DaggerFragment {
     private OffersViewModel mViewModel;
     private AllOfferFragmentListener listener;
     @Inject
-    public DemoRepo repository;
+    public AppRepo repository;
 
     public static OffersFragment newInstance() {
         return new OffersFragment();
@@ -40,11 +41,14 @@ public class OffersFragment extends DaggerFragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(
                 inflater, R.layout.all_offers_fragment, container, false);
+
+
         ((MainActivity) getActivity()).setCategoryChangeListener(new MainActivity.CategoryChangeListener() {
 
             @Override
             public void onCategoryChange(@NotNull CategoryEntity category) {
-                mViewModel.getOffersByCategory(category);
+
+                mViewModel.getOffersByCategory(category.getTitle());
             }
         });
 
@@ -63,15 +67,16 @@ public class OffersFragment extends DaggerFragment {
         mViewModel = ViewModelProviders.of(this).get(OffersViewModel.class);
         mViewModel.setRepository(repository);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        OffersAdapter offersAdapter = new OffersAdapter();
+        offersAdapter.setClickListener(clickedOfferListener);
+        offersAdapter.setLikedListener(likedOfferListener);
+        mBinding.recyclerView.setAdapter(offersAdapter);
 
-        mViewModel.getAllOffers().observe(this, offerEntities -> {
-            OffersAdapter offersAdapter = new OffersAdapter(offerEntities);
-            offersAdapter.setClickListener(clickedOfferListener);
-            offersAdapter.setLikedListener(likedOfferListener);
-            mBinding.recyclerView.setAdapter(offersAdapter);
+
+        mViewModel.getData().observe(this, offerEntities -> {
+            offersAdapter.setOfferEntities(offerEntities);
             offersAdapter.notifyDataSetChanged();
-
-            Log.d(OffersAdapter.class.getSimpleName(), "Data has changed ");
+            Log.d(OffersAdapter.class.getSimpleName(), "Data has changed no of items =" + offerEntities.size());
         });
 
 
@@ -96,6 +101,7 @@ public class OffersFragment extends DaggerFragment {
     OffersAdapter.OffersAdapterListener likedOfferListener = new OffersAdapter.OffersAdapterListener() {
         @Override
         public void onClicked(View view, OfferEntity offerEntity) {
+            Log.d(OffersFragment.class.getSimpleName(), "like Offer " + offerEntity.getTitle());
             mViewModel.likeOffer(offerEntity);
         }
     };

@@ -21,6 +21,7 @@ import android.view.Menu
 import android.view.View
 import com.almissbah.wasit.R
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity
+import com.almissbah.wasit.data.repo.AppRepo
 import com.almissbah.wasit.data.repo.AppRepository
 import com.almissbah.wasit.data.repo.DemoRepo
 import com.almissbah.wasit.ui.detail.DetailsActivity
@@ -37,7 +38,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    public lateinit var categoryChangeListener: CategoryChangeListener
+    lateinit var categoryChangeListener: CategoryChangeListener
     lateinit var mainBinding: com.almissbah.wasit.databinding.ActivityMainBinding
     val likedOffersFragment: LikedOffersFragment =
         LikedOffersFragment()
@@ -46,7 +47,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     val profileFragment: ProfileFragment = ProfileFragment()
     lateinit var rvCategories: RecyclerView
     @Inject
-    lateinit var repository: DemoRepo
+    lateinit var repository: AppRepo
     lateinit var mViewModle: CategoryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

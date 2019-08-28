@@ -13,13 +13,11 @@ import javax.inject.Singleton;
 
 @Module
 public class DbModule {
-
     @Provides
     @Singleton
     AppDatabase provideDatabase(@NonNull Application application) {
-        return  Room.databaseBuilder(application,
-                AppDatabase.class, "wasit_database.db")
-                .fallbackToDestructiveMigration().build();
+        return AppDatabase.getInstance(application);
+
     }
 
     @Provides

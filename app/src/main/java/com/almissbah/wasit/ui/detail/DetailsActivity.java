@@ -27,7 +27,7 @@ public class DetailsActivity extends DaggerAppCompatActivity {
 
 
         Bundle bundle = new Bundle();
-        bundle.putInt(OFFER_ID, 1);
+        bundle.putInt(OFFER_ID, getIntent().getIntExtra(OFFER_ID, 0));
 
         OfferDetailFragment offerDetailFragment = new OfferDetailFragment();
         offerDetailFragment.setArguments(bundle);

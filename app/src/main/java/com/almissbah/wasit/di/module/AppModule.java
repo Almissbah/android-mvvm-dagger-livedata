@@ -3,6 +3,8 @@ package com.almissbah.wasit.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import com.almissbah.wasit.data.local.db.dao.CategoryDao;
+import com.almissbah.wasit.data.local.db.dao.OfferDao;
 import com.almissbah.wasit.data.remote.api.AuthenticationApiService;
 import com.almissbah.wasit.data.remote.api.OffersApiService;
 import com.almissbah.wasit.data.repo.AppRepo;
@@ -57,8 +59,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppRepo provideOfferRepository() {
-        return new AppRepo();
+    AppRepo provideOfferRepository(OfferDao offerDao, CategoryDao categoryDao) {
+        return new AppRepo(offerDao, categoryDao);
     }
 
 

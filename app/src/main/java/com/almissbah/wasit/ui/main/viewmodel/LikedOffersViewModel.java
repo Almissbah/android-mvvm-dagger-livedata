@@ -19,10 +19,11 @@ public class LikedOffersViewModel extends AndroidViewModel {
 
     public void setRepository(AppRepository repository) {
         this.repository = repository;
-        likedOffers= repository.getLikedOffers();
+
     }
 
     public LiveData<List<OfferEntity>> getLikedOffers() {
+        likedOffers = repository.getLikedOffers();
         return likedOffers;
     }
 
