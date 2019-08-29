@@ -15,10 +15,11 @@ import com.almissbah.wasit.databinding.CategoryItemBinding;
 import com.almissbah.wasit.databinding.OfferItemBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    List<CategoryEntity> categoryEntities;
+    List<CategoryEntity> categoryEntities = new ArrayList<>();
     CategoryAdapterListener clickListener;
     int selected_index = -1;
 
