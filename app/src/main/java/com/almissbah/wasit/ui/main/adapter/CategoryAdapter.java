@@ -22,8 +22,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     CategoryAdapterListener clickListener;
     int selected_index = -1;
 
-    public CategoryAdapter(List<CategoryEntity> categoryEntities) {
+    public void setCategoryEntities(List<CategoryEntity> categoryEntities) {
         this.categoryEntities = categoryEntities;
+    }
+
+    public CategoryAdapter() {
+
     }
 
     public void setClickListener(CategoryAdapterListener clickListener) {

@@ -43,14 +43,7 @@ public class OffersFragment extends DaggerFragment {
                 inflater, R.layout.all_offers_fragment, container, false);
 
 
-        ((MainActivity) getActivity()).setCategoryChangeListener(new MainActivity.CategoryChangeListener() {
-
-            @Override
-            public void onCategoryChange(@NotNull CategoryEntity category) {
-
-                mViewModel.getOffersByCategory(category.getTitle());
-            }
-        });
+        ((MainActivity) getActivity()).setCategoryChangeListener(category -> mViewModel.getOffersByCategory(category.getTitle()));
 
         return mBinding.getRoot();
     }

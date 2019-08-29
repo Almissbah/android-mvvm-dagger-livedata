@@ -39,7 +39,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private val likedOffersFragment: LikedOffersFragment = LikedOffersFragment()
     private val offersFragment: OffersFragment = OffersFragment()
     private val profileFragment: ProfileFragment = ProfileFragment()
-
+    lateinit var adapter: CategoryAdapter
     private lateinit var rvCategories: RecyclerView
 
     @Inject
@@ -76,19 +76,21 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private fun initViewModel() {
         mViewModel = ViewModelProviders.of(this).get<CategoryViewModel>(CategoryViewModel::class.java)
         mViewModel.setRepository(repository)
+        adapter = CategoryAdapter()
+        rvCategories.adapter = adapter
+        rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        adapter.setClickListener { view: View, categoryEntity: CategoryEntity ->
+            Log.d(
+                OffersAdapter::class.java.simpleName,
+                "Activity CategoryEntity with title " + categoryEntity.title + " Clicked "
+            )
+            runOnUiThread { adapter.notifyDataSetChanged() }
+            if (categoryChangeListener != null)
+                categoryChangeListener.onCategoryChange(categoryEntity)
+        }
+
         mViewModel.allCategories.observe(this, Observer { t ->
-            var adapter = CategoryAdapter(t)
-            rvCategories.adapter = adapter
-            rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            adapter.setClickListener { view: View, categoryEntity: CategoryEntity ->
-                Log.d(
-                    OffersAdapter::class.java.simpleName,
-                    "Activity CategoryEntity with title " + categoryEntity.title + " Clicked "
-                )
-                runOnUiThread { adapter.notifyDataSetChanged() }
-                if (categoryChangeListener != null)
-                    categoryChangeListener.onCategoryChange(categoryEntity)
-            }
+            adapter.setCategoryEntities(t)
         })
     }
 
