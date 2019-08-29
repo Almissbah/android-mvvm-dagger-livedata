@@ -22,7 +22,7 @@ import com.almissbah.wasit.R
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity
 import com.almissbah.wasit.data.repo.AppRepo
 import com.almissbah.wasit.ui.detail.DetailsActivity
-import com.almissbah.wasit.ui.detail.fragment.OfferDetailFragment.OFFER_ID
+import com.almissbah.wasit.ui.detail.DetailsActivity.*
 import com.almissbah.wasit.ui.main.adapter.CategoryAdapter
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter
 import com.almissbah.wasit.ui.main.fragment.OffersFragment
@@ -33,44 +33,35 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     lateinit var categoryChangeListener: CategoryChangeListener
-    lateinit var mainBinding: com.almissbah.wasit.databinding.ActivityMainBinding
-    val likedOffersFragment: LikedOffersFragment =
-        LikedOffersFragment()
-    val offersFrgment: OffersFragment =
-        OffersFragment()
-    val profileFragment: ProfileFragment = ProfileFragment()
-    lateinit var rvCategories: RecyclerView
+    private lateinit var mainBinding: com.almissbah.wasit.databinding.ActivityMainBinding
+    private val likedOffersFragment: LikedOffersFragment = LikedOffersFragment()
+    private val offersFragment: OffersFragment = OffersFragment()
+    private val profileFragment: ProfileFragment = ProfileFragment()
+
+    private lateinit var rvCategories: RecyclerView
+
     @Inject
     lateinit var repository: AppRepo
-    lateinit var mViewModle: CategoryViewModel
+    private lateinit var mViewModel: CategoryViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mViewModle = ViewModelProviders.of(this).get<CategoryViewModel>(CategoryViewModel::class.java)
-        rvCategories = mainBinding.root.findViewById(R.id.rv_categories)
-        mViewModle.setRepository(repository)
-        mViewModle.allCategories.observe(this, Observer { t ->
-            var adapter = CategoryAdapter(t)
+        initView()
+        initViewModel()
+        initOffersFragment()
+        setBottomNavListener()
 
-            rvCategories.adapter = adapter
-            rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
 
-            adapter.setClickListener { view: View, categoryEntity: CategoryEntity ->
-                Log.d(
-                    OffersAdapter::class.java.simpleName,
-                    "Activity CategoryEntity with title " + categoryEntity.title + " Clicked "
-                )
-                if (categoryChangeListener != null)
-                    categoryChangeListener.onCategoryChange(categoryEntity)
-            }
-        })
+    private fun initView() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         val drawerLayout: DrawerLayout = mainBinding.drawerLayout
         val navView: NavigationView = mainBinding.navView
-        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_bar)
+
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,
@@ -78,24 +69,50 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         navView.setNavigationItemSelectedListener(this)
-        offersFrgment.setListener { offerEntity ->
+        rvCategories = mainBinding.root.findViewById(R.id.rv_categories)
+    }
 
-            var intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(OFFER_ID, offerEntity.id)
-            startActivity(intent)
-        }
+    private fun initViewModel() {
+        mViewModel = ViewModelProviders.of(this).get<CategoryViewModel>(CategoryViewModel::class.java)
+        mViewModel.setRepository(repository)
+        mViewModel.allCategories.observe(this, Observer { t ->
+            var adapter = CategoryAdapter(t)
+            rvCategories.adapter = adapter
+            rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            adapter.setClickListener { view: View, categoryEntity: CategoryEntity ->
+                Log.d(
+                    OffersAdapter::class.java.simpleName,
+                    "Activity CategoryEntity with title " + categoryEntity.title + " Clicked "
+                )
+                runOnUiThread { adapter.notifyDataSetChanged() }
+                if (categoryChangeListener != null)
+                    categoryChangeListener.onCategoryChange(categoryEntity)
+            }
+        })
+    }
+
+    private fun initOffersFragment() {
 
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_layout, offersFrgment)
+        transaction.replace(R.id.frame_layout, offersFragment)
         transaction.commit()
 
+        offersFragment.setListener { offerEntity ->
+            var intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(EXT_DATA, FRAG_OFFER_DETAIL_INDEX)
+            intent.putExtra(OBJECT_ID, offerEntity.id)
+            startActivity(intent)
+        }
+    }
+
+    private fun setBottomNavListener() {
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_bar)
         bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
                     val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frame_layout, offersFrgment)
+                    transaction.replace(R.id.frame_layout, offersFragment)
                     transaction.commit()
                     rvCategories.visibility = View.VISIBLE
                 }
@@ -115,7 +132,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             true
         }
     }
-
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -161,7 +177,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
-    public interface CategoryChangeListener {
+    interface CategoryChangeListener {
         fun onCategoryChange(category: CategoryEntity)
     }
 }

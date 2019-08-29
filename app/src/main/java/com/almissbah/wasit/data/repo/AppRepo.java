@@ -7,6 +7,14 @@ import com.almissbah.wasit.data.local.db.dao.OfferDao;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.local.pref.User;
+import com.almissbah.wasit.data.remote.CallbackWrapper;
+import com.almissbah.wasit.data.remote.api.OffersApiService;
+import com.almissbah.wasit.data.remote.model.CategoryApiResponce;
+import com.almissbah.wasit.data.remote.model.OfferApiResponce;
+import io.reactivex.Scheduler;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,17 +27,19 @@ public class AppRepo implements AppRepository {
 
     public CategoryDao categoryDao;
 
-
+    public OffersApiService offersApiService;
     private LiveData<List<OfferEntity>> allOffers;
     private LiveData<List<CategoryEntity>> allCategories;
 
     @Inject
-    public AppRepo(OfferDao offerDao, CategoryDao categoryDao) {
+    public AppRepo(OfferDao offerDao, CategoryDao categoryDao, OffersApiService offersApiService) {
         this.offerDao = offerDao;
         this.categoryDao = categoryDao;
+        this.offersApiService = offersApiService;
     }
 
     public LiveData<OfferEntity> getOfferById(int id) {
+
         return offerDao.getOfferById(id);
     }
 
@@ -39,19 +49,18 @@ public class AppRepo implements AppRepository {
 
     public LiveData<List<OfferEntity>> getLikedOffers(){
         allOffers = offerDao.getLikedOffers();
-        //   Log.d(AppRepo.class.getSimpleName(),"getLikedOffers size"+ allOffers.getValue().size());
         return allOffers;
     }
 
     public LiveData<List<OfferEntity>> getAllOffers() {
         allOffers = offerDao.getAllOffers();
-        //Log.d(AppRepo.class.getSimpleName(),"getAllOffers size"+ allOffers.getValue().size());
+        refreshOffers();
         return allOffers;
     }
 
     public LiveData<List<CategoryEntity>> getAllCategories() {
         allCategories = categoryDao.getAllCategories();
-
+        refreshCategories();
         return allCategories;
     }
 
@@ -70,6 +79,31 @@ public class AppRepo implements AppRepository {
 
     @Override
     public LiveData<List<OfferEntity>> getOffersByCategory(String category) {
-        return offerDao.getOffersByCategories("%" + category + "%");
+        return offerDao.getOffersByCategories("%\"" + category + "\"%");
+    }
+
+
+    void refreshOffers() {
+        offersApiService.fetchAllOffers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CallbackWrapper<OfferApiResponce>() {
+                    @Override
+                    public void onSuccess(OfferApiResponce offerApiResponce) {
+                        offerDao.insert(offerApiResponce.getOfferEntities());
+                    }
+                });
+    }
+
+    void refreshCategories() {
+        offersApiService.fetchAllCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CallbackWrapper<CategoryApiResponce>() {
+                    @Override
+                    public void onSuccess(CategoryApiResponce categoryApiResponce) {
+                        categoryDao.insert(categoryApiResponce.getData());
+                    }
+                });
     }
 }

@@ -4,7 +4,7 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 
 import java.util.List;
 
-public class OfferApiResponce {
+public class OfferApiResponce extends BaseResponse {
     List<OfferEntity> offerEntities;
 
     public OfferApiResponce(List<OfferEntity> offerEntities) {

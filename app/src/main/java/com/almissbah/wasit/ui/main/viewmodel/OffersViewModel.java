@@ -26,12 +26,7 @@ public class OffersViewModel extends AndroidViewModel {
     public void getAllOffers() {
         allOffersLiveData = repository.getAllOffers();
         liveData.removeSource(categoryOffersLiveData);
-        liveData.addSource(allOffersLiveData, new Observer<List<OfferEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<OfferEntity> offerEntities) {
-                liveData.setValue(offerEntities);
-            }
-        });
+        liveData.addSource(allOffersLiveData, offerEntities -> liveData.setValue(offerEntities));
     }
 
     public LiveData<List<OfferEntity>> getData() {
@@ -45,12 +40,7 @@ public class OffersViewModel extends AndroidViewModel {
         } else {
             categoryOffersLiveData = repository.getOffersByCategory(category);
             liveData.removeSource(allOffersLiveData);
-            liveData.addSource(categoryOffersLiveData, new Observer<List<OfferEntity>>() {
-                @Override
-                public void onChanged(@Nullable List<OfferEntity> offerEntities) {
-                    liveData.setValue(offerEntities);
-                }
-            });
+            liveData.addSource(categoryOffersLiveData, offerEntities -> liveData.setValue(offerEntities));
         }
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     List<CategoryEntity> categoryEntities;
     CategoryAdapterListener clickListener;
+    int selected_index = -1;
 
     public CategoryAdapter(List<CategoryEntity> categoryEntities) {
         this.categoryEntities = categoryEntities;
@@ -48,14 +49,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         viewHolder.binding.setCategory(categoryEntity);
         Log.d(CategoryAdapter.class.getSimpleName(), "Category with title " + categoryEntity.getTitle() + " Clicked ");
 
-        viewHolder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(CategoryAdapter.class.getSimpleName(), "Category with title " + categoryEntity.getTitle() + " Clicked ");
-                if (clickListener != null)
-                    clickListener.onClicked(view, categoryEntity);
+        viewHolder.binding.getRoot().setOnClickListener(view -> {
+            selected_index = position;
+            Log.d(CategoryAdapter.class.getSimpleName(), "Category with title " + categoryEntity.getTitle() + " Clicked ");
+            if (clickListener != null) {
+                clickListener.onClicked(view, categoryEntity);
             }
         });
+
+        if (selected_index == position) {
+            viewHolder.binding.tvCategoryTitle.setBackgroundResource(R.drawable.roundedbutton_blue);
+        } else {
+            viewHolder.binding.tvCategoryTitle.setBackgroundResource(R.drawable.roundedbutton_green);
+        }
     }
 
     @Override

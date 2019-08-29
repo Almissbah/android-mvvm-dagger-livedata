@@ -35,12 +35,11 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
-                .client(okHttpClient)
                 .build();
     }
 
@@ -59,8 +58,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppRepo provideOfferRepository(OfferDao offerDao, CategoryDao categoryDao) {
-        return new AppRepo(offerDao, categoryDao);
+    AppRepo provideOfferRepository(OfferDao offerDao, CategoryDao categoryDao, OffersApiService service) {
+        return new AppRepo(offerDao, categoryDao, service);
     }
 
 

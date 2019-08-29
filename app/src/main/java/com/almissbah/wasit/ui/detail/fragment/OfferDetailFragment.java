@@ -22,10 +22,11 @@ import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
 
+import static com.almissbah.wasit.ui.detail.DetailsActivity.OBJECT_ID;
+
 
 public class OfferDetailFragment extends DaggerFragment {
     private int offer_id;
-    public static String OFFER_ID = "offer_id";
     private FragmentOfferDetailBinding mBinding;
     private OfferDetailViewModel offerDetailViewModel;
     @Inject
@@ -45,23 +46,21 @@ public class OfferDetailFragment extends DaggerFragment {
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
         offerDetailViewModel = ViewModelProviders.of(this).get(OfferDetailViewModel.class);
-        offer_id = getArguments().getInt(OFFER_ID);
+
+        offer_id = getArguments().getInt(OBJECT_ID);
         offerDetailViewModel.setRepository(repository);
 
-        offerDetailViewModel.getOfferById(offer_id).observe(this, new Observer<OfferEntity>() {
-            @Override
-            public void onChanged(@Nullable OfferEntity offerEntity) {
-                mBinding.setOffer(offerEntity);
-                Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
-                if (offerEntity.isLiked()) mBinding.btnLike.setVisibility(View.INVISIBLE);
-                mBinding.markdownView.loadMarkdown(offerEntity.getContent());
-                mBinding.btnLike.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        offerDetailViewModel.likeOffer(offerEntity);
-                    }
-                });
-            }
+        offerDetailViewModel.getOfferById(offer_id).observe(this, offerEntity -> {
+
+            mBinding.setOffer(offerEntity);
+
+            Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
+
+            if (offerEntity.isLiked()) mBinding.btnLike.setVisibility(View.INVISIBLE);
+
+            mBinding.markdownView.loadMarkdown(offerEntity.getContent());
+
+            mBinding.btnLike.setOnClickListener(view -> offerDetailViewModel.likeOffer(offerEntity));
         });
         return mBinding.getRoot();
     }
