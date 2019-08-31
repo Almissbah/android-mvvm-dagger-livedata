@@ -9,15 +9,12 @@
         tools:showIn="@layout/app_bar_main"
         tools:context=".ui.main.MainActivity" android:background="@android:color/white">
 
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/rv_categories"
-            android:layout_marginTop="8dp"/>
+
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/frame_layout"
-            android:layout_below="@+id/rv_categories" android:layout_above="@+id/bottom_nav_bar"
-            android:layout_margin="5dp">
+            android:layout_above="@+id/bottom_nav_bar"
+    >
 
     </FrameLayout>
     <android.support.design.widget.BottomNavigationView

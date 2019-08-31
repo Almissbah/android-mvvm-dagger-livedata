@@ -13,13 +13,14 @@ import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.pref.User;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.ProfileFragmentBinding;
+import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.main.viewmodel.ProfileViewModel;
 import com.squareup.picasso.Picasso;
 import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
 
-public class ProfileFragment extends DaggerFragment {
+public class ProfileFragment extends BaseFragment {
     private ProfileFragmentBinding mBinding;
     private ProfileViewModel mViewModel;
     @Inject

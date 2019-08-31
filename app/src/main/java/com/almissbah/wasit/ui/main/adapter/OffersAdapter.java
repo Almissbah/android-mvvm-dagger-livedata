@@ -18,8 +18,8 @@ import java.util.List;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHolder> {
     List<OfferEntity> offerEntities = new ArrayList<>();
-    OffersAdapterListener clickListener;
-    OffersAdapterListener likedListener;
+    ItemClickListener clickListener;
+    ItemClickListener likedListener;
 
     public OffersAdapter() {
 
@@ -29,11 +29,11 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         this.offerEntities = offerEntities;
     }
 
-    public void setClickListener(OffersAdapterListener clickListener) {
+    public void setClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
-    public void setLikedListener(OffersAdapterListener likedListener) {
+    public void setLikedListener(ItemClickListener likedListener) {
         this.likedListener = likedListener;
     }
 
@@ -88,7 +88,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         }
     }
 
-    public interface OffersAdapterListener {
+    public interface ItemClickListener {
         void onClicked(View view, OfferEntity offerEntity);
     }
 }

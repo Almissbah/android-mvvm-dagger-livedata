@@ -9,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
+import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.detail.viewmodel.OwnerDetailViewModel;
 
-public class OwnerDetailFragment extends Fragment {
+public class OwnerDetailFragment extends BaseFragment {
 
     private OwnerDetailViewModel mViewModel;
 

@@ -16,6 +16,7 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.repo.AppRepo;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.FragmentOfferDetailBinding;
+import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.detail.viewmodel.OfferDetailViewModel;
 import com.squareup.picasso.Picasso;
 import dagger.android.support.DaggerFragment;
@@ -25,45 +26,48 @@ import javax.inject.Inject;
 import static com.almissbah.wasit.ui.detail.DetailsActivity.OBJECT_ID;
 
 
-public class OfferDetailFragment extends DaggerFragment {
+public class OfferDetailFragment extends BaseFragment {
     private int offer_id;
     private FragmentOfferDetailBinding mBinding;
-    private OfferDetailViewModel offerDetailViewModel;
+    OfferDetailViewModel offerDetailViewModel;
     @Inject
     AppRepo repository;
-    public OfferDetailFragment() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
-        offerDetailViewModel = ViewModelProviders.of(this).get(OfferDetailViewModel.class);
 
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initViewModel();
+    }
+
+    void initViewModel() {
+        offerDetailViewModel = ViewModelProviders.of(this).get(OfferDetailViewModel.class);
         offer_id = getArguments().getInt(OBJECT_ID);
         offerDetailViewModel.setRepository(repository);
 
         offerDetailViewModel.getOfferById(offer_id).observe(this, offerEntity -> {
-
-            mBinding.setOffer(offerEntity);
-
-            Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
-
-            if (offerEntity.isLiked()) mBinding.btnLike.setVisibility(View.INVISIBLE);
-
-            mBinding.markdownView.loadMarkdown(offerEntity.getContent());
-
-            mBinding.btnLike.setOnClickListener(view -> offerDetailViewModel.likeOffer(offerEntity));
+            initOfferView(offerEntity);
         });
-        return mBinding.getRoot();
     }
 
+    void initOfferView(OfferEntity offerEntity) {
+        mBinding.setOffer(offerEntity);
+        Picasso.get().load(R.drawable.offer_image_3).into(mBinding.ivOfferImage);
+        if (offerEntity.isLiked()) mBinding.btnLike.setVisibility(View.INVISIBLE);
+        mBinding.markdownView.loadMarkdown(offerEntity.getContent());
+        mBinding.btnLike.setOnClickListener(view -> offerDetailViewModel.likeOffer(offerEntity));
+    }
 
 }

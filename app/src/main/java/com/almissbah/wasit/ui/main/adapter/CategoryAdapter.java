@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     List<CategoryEntity> categoryEntities = new ArrayList<>();
-    CategoryAdapterListener clickListener;
+    ItemClickListener clickListener;
     int selected_index = -1;
 
     public void setCategoryEntities(List<CategoryEntity> categoryEntities) {
@@ -31,7 +31,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     }
 
-    public void setClickListener(CategoryAdapterListener clickListener) {
+    public void setClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -60,6 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             if (clickListener != null) {
                 clickListener.onClicked(view, categoryEntity);
             }
+            notifyDataSetChanged();
         });
 
         if (selected_index == position) {
@@ -84,7 +85,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
     }
 
-    public interface CategoryAdapterListener {
+    public interface ItemClickListener {
         void onClicked(View view, CategoryEntity categoryEntity);
     }
 }

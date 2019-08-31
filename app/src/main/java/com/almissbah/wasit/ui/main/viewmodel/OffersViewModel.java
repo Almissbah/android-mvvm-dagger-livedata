@@ -10,15 +10,13 @@ import com.almissbah.wasit.data.repo.AppRepository;
 
 import java.util.List;
 
-public class OffersViewModel extends AndroidViewModel {
+public class OffersViewModel extends ViewModel {
     AppRepository repository;
     MediatorLiveData<List<OfferEntity>> liveData = new MediatorLiveData<>();
     LiveData<List<OfferEntity>> allOffersLiveData = new MutableLiveData<>();
     LiveData<List<OfferEntity>> categoryOffersLiveData = new MutableLiveData<>();
-    public OffersViewModel(@NonNull Application application) {
-        super(application);
-    }
-
+    LiveData<List<CategoryEntity>> categoryLiveData = new MutableLiveData<>();
+    ;
     public void setRepository(AppRepository repository) {
         this.repository = repository;
     }
@@ -27,6 +25,11 @@ public class OffersViewModel extends AndroidViewModel {
         allOffersLiveData = repository.getAllOffers();
         liveData.removeSource(categoryOffersLiveData);
         liveData.addSource(allOffersLiveData, offerEntities -> liveData.setValue(offerEntities));
+    }
+
+    public LiveData<List<CategoryEntity>> getAllCategories() {
+        categoryLiveData = repository.getAllCategories();
+        return categoryLiveData;
     }
 
     public LiveData<List<OfferEntity>> getData() {

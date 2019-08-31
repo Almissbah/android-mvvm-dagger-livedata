@@ -15,6 +15,7 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.repo.AppRepo;
 import com.almissbah.wasit.data.repo.DemoRepo;
 import com.almissbah.wasit.databinding.LikedOffersFragmentBinding;
+import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
 import com.almissbah.wasit.ui.main.viewmodel.LikedOffersViewModel;
 import dagger.android.support.DaggerFragment;
@@ -22,7 +23,7 @@ import dagger.android.support.DaggerFragment;
 import javax.inject.Inject;
 import java.util.List;
 
-public class LikedOffersFragment extends DaggerFragment {
+public class LikedOffersFragment extends BaseFragment {
     private LikedOffersFragmentBinding mBinding;
     private LikedOffersViewModel mViewModel;
     @Inject
