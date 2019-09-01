@@ -86,7 +86,7 @@ public class AppRepo implements AppRepository {
     void refreshOffers() {
         offersApiService.fetchAllOffers()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .subscribe(new CallbackWrapper<OfferApiResponce>() {
                     @Override
                     public void onSuccess(OfferApiResponce offerApiResponce) {
@@ -96,13 +96,16 @@ public class AppRepo implements AppRepository {
     }
 
     void refreshCategories() {
+        Log.d(AppRepo.class.getSimpleName(), "refreshCategories ");
         offersApiService.fetchAllCategories()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CallbackWrapper<CategoryApiResponce>() {
+                .observeOn(Schedulers.io())
+                .subscribe(new CallbackWrapper<List<CategoryEntity>>() {
                     @Override
-                    public void onSuccess(CategoryApiResponce categoryApiResponce) {
-                        categoryDao.insert(categoryApiResponce.getData());
+                    public void onSuccess(List<CategoryEntity> data) {
+                        Log.d(AppRepo.class.getSimpleName(), "data =" + data.size());
+                        categoryDao.insert(data);
+
                     }
                 });
     }

@@ -1,6 +1,7 @@
 package com.almissbah.wasit.data.remote.api;
 
 
+import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.remote.model.CategoryApiResponce;
 import com.almissbah.wasit.data.remote.model.OfferApiResponce;
 import io.reactivex.Observable;
@@ -10,6 +11,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import java.util.List;
+
 public interface OffersApiService {
 
     @GET("/categories/all/offers")
@@ -17,7 +20,7 @@ public interface OffersApiService {
 
 
     @GET("/categories")
-    Observable<CategoryApiResponce> fetchAllCategories();
+    Observable<List<CategoryEntity>> fetchAllCategories();
 
     @GET("/categories/{category}/offers")
     Observable<OfferApiResponce> fetchOffersByCategory(@Path("category") String category);

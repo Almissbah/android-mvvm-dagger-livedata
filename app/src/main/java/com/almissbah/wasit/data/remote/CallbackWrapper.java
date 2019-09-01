@@ -8,8 +8,6 @@ public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
-
-
         onSuccess(t);
     }
 
