@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.pref.User;
-import com.almissbah.wasit.data.repo.DemoRepo;
+import com.almissbah.wasit.data.repo.BazarDemoRepository;
 import com.almissbah.wasit.databinding.ProfileFragmentBinding;
 import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.main.viewmodel.ProfileViewModel;
 import com.squareup.picasso.Picasso;
-import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
 
@@ -24,7 +23,7 @@ public class ProfileFragment extends BaseFragment {
     private ProfileFragmentBinding mBinding;
     private ProfileViewModel mViewModel;
     @Inject
-    DemoRepo repository;
+    BazarDemoRepository repository;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();

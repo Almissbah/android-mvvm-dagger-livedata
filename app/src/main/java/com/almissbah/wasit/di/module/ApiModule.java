@@ -9,8 +9,8 @@ import com.almissbah.wasit.data.remote.api.AuthenticationApiService;
 import com.almissbah.wasit.data.remote.api.OffersApiService;
 import com.almissbah.wasit.data.remote.interceptor.NetworkInterceptor;
 import com.almissbah.wasit.data.remote.interceptor.RequestInterceptor;
-import com.almissbah.wasit.data.repo.AppRepo;
-import com.almissbah.wasit.data.repo.DemoRepo;
+import com.almissbah.wasit.data.repo.BazarDemoRepository;
+import com.almissbah.wasit.data.repo.BazarRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;
@@ -97,15 +97,15 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    AppRepo provideOfferRepository(OfferDao offerDao, CategoryDao categoryDao, OffersApiService service) {
-        return new AppRepo(offerDao, categoryDao, service);
+    BazarRepository provideOfferRepository(OfferDao offerDao, CategoryDao categoryDao, OffersApiService service) {
+        return new BazarRepository(offerDao, categoryDao, service);
     }
 
 
     @Provides
     @Singleton
-    DemoRepo provideDemoRepo() {
-        return new DemoRepo();
+    BazarDemoRepository provideDemoRepo() {
+        return new BazarDemoRepository();
     }
 
     @Provides

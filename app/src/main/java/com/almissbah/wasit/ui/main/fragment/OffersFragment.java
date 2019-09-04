@@ -1,6 +1,5 @@
 package com.almissbah.wasit.ui.main.fragment;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -17,16 +16,14 @@ import com.almissbah.wasit.BuildConfig;
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.CategoryEntity;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
-import com.almissbah.wasit.data.repo.AppRepo;
+import com.almissbah.wasit.data.repo.BazarRepository;
 import com.almissbah.wasit.databinding.AllOffersFragmentBinding;
 import com.almissbah.wasit.ui.base.BaseFragment;
-import com.almissbah.wasit.ui.main.MainActivity;
 import com.almissbah.wasit.ui.main.adapter.CategoryAdapter;
 import com.almissbah.wasit.ui.main.adapter.OffersAdapter;
 import com.almissbah.wasit.ui.main.viewmodel.OffersViewModel;
 
 import javax.inject.Inject;
-import java.util.List;
 
 public class OffersFragment extends BaseFragment {
     private AllOffersFragmentBinding mBinding;
@@ -48,7 +45,7 @@ public class OffersFragment extends BaseFragment {
         }
     };
     @Inject
-    public AppRepo repository;
+    public BazarRepository repository;
     private CategoryAdapter categoryAdapter;
 
     public static OffersFragment newInstance() {

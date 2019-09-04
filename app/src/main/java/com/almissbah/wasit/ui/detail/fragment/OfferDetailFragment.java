@@ -1,10 +1,7 @@
 package com.almissbah.wasit.ui.detail.fragment;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,13 +10,11 @@ import android.view.ViewGroup;
 
 import com.almissbah.wasit.R;
 import com.almissbah.wasit.data.local.db.entity.OfferEntity;
-import com.almissbah.wasit.data.repo.AppRepo;
-import com.almissbah.wasit.data.repo.DemoRepo;
+import com.almissbah.wasit.data.repo.BazarRepository;
 import com.almissbah.wasit.databinding.FragmentOfferDetailBinding;
 import com.almissbah.wasit.ui.base.BaseFragment;
 import com.almissbah.wasit.ui.detail.viewmodel.OfferDetailViewModel;
 import com.squareup.picasso.Picasso;
-import dagger.android.support.DaggerFragment;
 
 import javax.inject.Inject;
 
@@ -31,7 +26,7 @@ public class OfferDetailFragment extends BaseFragment {
     private FragmentOfferDetailBinding mBinding;
     OfferDetailViewModel offerDetailViewModel;
     @Inject
-    AppRepo repository;
+    BazarRepository repository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

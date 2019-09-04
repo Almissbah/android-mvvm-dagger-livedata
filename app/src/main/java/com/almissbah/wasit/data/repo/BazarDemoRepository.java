@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DemoRepo implements AppRepository {
-    public DemoRepo() {
+public class BazarDemoRepository implements AppRepository {
+    public BazarDemoRepository() {
     }
 
     @Override

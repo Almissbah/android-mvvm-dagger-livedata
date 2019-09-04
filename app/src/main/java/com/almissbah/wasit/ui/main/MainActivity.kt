@@ -16,7 +16,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.almissbah.wasit.R
 import com.almissbah.wasit.data.local.db.entity.OfferEntity
-import com.almissbah.wasit.data.repo.AppRepo
+import com.almissbah.wasit.data.repo.BazarRepository
 import com.almissbah.wasit.ui.base.BaseActivity
 import com.almissbah.wasit.ui.detail.DetailsActivity
 import com.almissbah.wasit.ui.detail.DetailsActivity.*
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 
     @Inject
-    lateinit var repository: AppRepo
+    lateinit var repository: BazarRepository
     private lateinit var mViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

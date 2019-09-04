@@ -9,11 +9,7 @@ import com.almissbah.wasit.data.local.db.entity.OfferEntity;
 import com.almissbah.wasit.data.local.pref.User;
 import com.almissbah.wasit.data.remote.CallbackWrapper;
 import com.almissbah.wasit.data.remote.api.OffersApiService;
-import com.almissbah.wasit.data.remote.model.CategoryApiResponce;
 import com.almissbah.wasit.data.remote.model.OfferApiResponce;
-import io.reactivex.Scheduler;
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
@@ -21,7 +17,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class AppRepo implements AppRepository {
+public class BazarRepository implements AppRepository {
 
     public OfferDao offerDao;
 
@@ -32,7 +28,7 @@ public class AppRepo implements AppRepository {
     private LiveData<List<CategoryEntity>> allCategories;
 
     @Inject
-    public AppRepo(OfferDao offerDao, CategoryDao categoryDao, OffersApiService offersApiService) {
+    public BazarRepository(OfferDao offerDao, CategoryDao categoryDao, OffersApiService offersApiService) {
         this.offerDao = offerDao;
         this.categoryDao = categoryDao;
         this.offersApiService = offersApiService;
@@ -96,14 +92,14 @@ public class AppRepo implements AppRepository {
     }
 
     void refreshCategories() {
-        Log.d(AppRepo.class.getSimpleName(), "refreshCategories ");
+        Log.d(BazarRepository.class.getSimpleName(), "refreshCategories ");
         offersApiService.fetchAllCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(new CallbackWrapper<List<CategoryEntity>>() {
                     @Override
                     public void onSuccess(List<CategoryEntity> data) {
-                        Log.d(AppRepo.class.getSimpleName(), "data =" + data.size());
+                        Log.d(BazarRepository.class.getSimpleName(), "data =" + data.size());
                         categoryDao.insert(data);
 
                     }
