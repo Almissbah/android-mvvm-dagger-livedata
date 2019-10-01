@@ -1,9 +1,9 @@
 # Al Wasit Android
-This a simple Application for delivering offers to users.
+This a simple Application for testing mvvm and repository pattern.
 
 ## App Features
 1. User can list and view offers.
-2. User can contact offer owners.
+2. User can add offers to his favorites list.
 
 ## App architecture
 Based on mvvm architecture and repository pattern.
