@@ -1,5 +1,5 @@
 # Al Wasit Android
-This a simple Application for testing mvvm and repository pattern.
+This a simple Application implementing mvvm and repository pattern.
 
 ## App Features
 1. User can list and view offers.
