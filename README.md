@@ -1,6 +1,11 @@
 # Al Wasit Android
 This a simple Application implementing mvvm and repository pattern.
 
+## ScreenShots:
+
+<img src="home.jpg" width="300">  <img src="fav.jpg" width="300">  <img src="details.jpg" width="300"> 
+
+
 ## App Features
 1. User can list and view offers.
 2. User can add offers to his favorites list.
